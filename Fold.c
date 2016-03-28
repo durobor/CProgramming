@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define LINELENGTH 100
+#define LINELENGTH 50
 #define MAXINPUT 2000
 
 int getInput(char storingDest[]);
@@ -30,4 +30,24 @@ int getInput(char storingDest[]){
 
 void parseOutput(char rawInput[]){
 	char line[LINELENGTH];
+	int j;
+	for(j=0;(MAXINPUT-LINELENGTH-1)>j && rawInput[j]!='\n' && rawInput[j]!='\0' && rawInput[j]!=EOF;++j){
+		int i;
+		for(i=0;(LINELENGTH-1)>i && rawInput[i+j]!='\n' && rawInput[i+j]!=EOF;++i){
+			line[i]=rawInput[i+j];
+		}
+		while(0<i && '\n'!=rawInput[i+j] && ' '!=rawInput[i+j]){
+			--i;
+		}
+		if(0==i){
+			j+=LINELENGTH-3;
+			line[LINELENGTH-2]='-';
+			line[LINELENGTH-1]='\0';
+		}
+		else{
+			line[i]='\0';
+			j+=i;
+		}
+		printf("%s\n", line);
+	}
 }
